@@ -5,16 +5,16 @@ public class CargaProfundidad {
 
     private double posicionX;
     private double profundidadActual;
-    private double ProfundidadExplosion;
+    private double profundidadExplosion;
 
     private double velocidadCaida;
 
     private boolean exploto;
 
-    public CargaProfundidad(double posicionX) {
+    public CargaProfundidad(double posicionX, double velocidadCaida) {
         this.posicionX = posicionX;
         this.profundidadActual = 0;
-        this.velocidadCaida = 0;
+        this.velocidadCaida = this.velocidadCaida;
         this.exploto = false;
 
 
@@ -33,18 +33,33 @@ public class CargaProfundidad {
     }
 
     public void explotar() {
-        if(profundidadActual >= ProfundidadExplosion)
-        exploto = true;
-        System.out.println("Carga explota en profundidad " + ProfundidadExplosion);
+        if (profundidadActual >= profundidadExplosion) {
+            exploto = true;
+            System.out.println("Carga explota en profundidad " + profundidadExplosion);
 
+        }
     }
 
+    public boolean isExploto() {
+        return exploto;
+    }
 
 
     public void generarProfundidadExplosion() {
         Random random = new Random();
 
-        ProfundidadExplosion = random.nextInt(401) + 300;
+        profundidadExplosion = random.nextInt(401) + 300;
+    }
+
+    public double calcularDistancia(Submarino submarino) {
+        double distancia =
+                Math.abs(
+                        profundidadExplosion
+                                - submarino.getProfundidad()
+                );
+        return distancia;
+
     }
 }
+
 

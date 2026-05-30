@@ -12,7 +12,8 @@ public class Submarino {
 
         posicionX = 0.0; // porque no un entero?
         profundidad = 300.0; // porque no un entero?
-        vida = 0;
+        vidas = 3;
+        vida = 100;
         direccion = "derecha";
 
 
@@ -43,9 +44,38 @@ public class Submarino {
         }
 
     }
+    public double getPosicionX() {
+        return posicionX;
+    }
+
+    public double getProfundidad() {
+        return profundidad;
+    }
+
+    public int getVidas() {
+        return vidas;
+    }
+
+    public double getVida() {
+        return vida;
+    }
     public void bajar(){
         if(profundidad < 800){
             profundidad += 10;
+
+        }
+    }
+    public void recibirDanio(double porcentajedanio){
+        vida -= porcentajedanio;
+
+        if(vida <= 0){
+            vida --;
+            vida = 100;
+
+        }
+
+        if(vida < 0){
+            vidas = 0;
 
         }
     }

@@ -1,37 +1,55 @@
 package org.barcoUade;
 
+import java.util.Random;
+
 public class BarcoEnemigo {
 
-
-    private double posicionX; // izquierda y derecha
+    private double posicionX;
     private String direccion;
     private double velocidadMovimiento;
 
+    public BarcoEnemigo(double velocidadMovimiento) {
+        this.posicionX = 0;
+        this.velocidadMovimiento = velocidadMovimiento;
 
-    public void barcoEnemigo(){
-        posicionX = 0;
-        direccion = "derecha";
-        velocidadMovimiento = 2.0;
-    }
+        Random random = new Random();
 
-
-    public void mover(){
-        if(direccion.equals("derecha")) {
-            posicionX = posicionX + velocidadMovimiento;
-        }else{
-            posicionX = posicionX - velocidadMovimiento;
-
+        if (random.nextBoolean()) {
+            this.direccion = "derecha";
+        } else {
+            this.direccion = "izquierda";
         }
-        System.out.println("barco moviendose");
+    }
+
+    public void mover() {
+        if (direccion.equals("derecha")) {
+            posicionX += velocidadMovimiento;
+        } else {
+            posicionX -= velocidadMovimiento;
+        }
+        System.out.println(
+                "barco moviendose hacia   "
+                +direccion
+                +"posicion"
+                +posicionX
+        );
+    }
+
+    public CargaProfundidad lanzarCarga(double velocidadCaida) {
+        System.out.println("barco lanzo una  carga");
+        return new CargaProfundidad(posicionX, velocidadCaida);
 
     }
 
-
-    public CargaProfundidad lanzarCarga(){
-        System.out.println("barco lanzo una carga");
-
-        return new CargaProfundidad(posicionX);
-
+    public double getPosicionX() {
+        return posicionX;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public double getVelocidadMovimiento() {
+        return velocidadMovimiento;
+    }
 }
