@@ -14,7 +14,7 @@ public class CargaProfundidad {
     public CargaProfundidad(double posicionX, double velocidadCaida) {
         this.posicionX = posicionX;
         this.profundidadActual = 0;
-        this.velocidadCaida = this.velocidadCaida;
+        this.velocidadCaida = velocidadCaida;
         this.exploto = false;
 
 
@@ -60,6 +60,9 @@ public class CargaProfundidad {
         return distancia;
 
     }
+
+
 }
+
 
 

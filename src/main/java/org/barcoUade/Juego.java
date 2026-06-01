@@ -10,6 +10,7 @@ public class Juego {
     private Nivel nivel;
     private BarcoEnemigo barco;
     private CargaProfundidad carga;
+    private int proximaVidaExtra;
 
 
 
@@ -24,6 +25,7 @@ public class Juego {
         barcosActivos = 0;
         submarino  = new Submarino();
         nivel  = new Nivel();
+        proximaVidaExtra = 500;
 
 
 
@@ -76,8 +78,47 @@ public class Juego {
 
     }
     public void procesarExplosion(CargaProfundidad carga){
+
         System.out.println("procesando explosion");
+
+        double distancia = carga.calcularDistancia(submarino);
+
+        if(distancia > 100){
+            puntaje += 30;
+            System.out.println("Explosion lejana. +30 puntos");
+        }
+        else if(distancia >= 50){
+            puntaje += 10;
+            submarino.recibirDanio(30);
+            System.out.println("Explosion media. +10 puntos y 30% de daño");
+        }
+        else if(distancia >= 10){
+            submarino.recibirDanio(50);
+            System.out.println("Explosion cercana. 50% de daño");
+        }
+        else{
+            submarino.recibirDanio(100);
+            System.out.println("Explosion directa. Pierde una vida");
+        }
+
+        System.out.println("Puntaje actual: " + puntaje);
+        verificarVidaExtra();
+
     }
+    public void verificarVidaExtra(){
+
+        if(puntaje >= 500){
+            System.out.println("Vida extra obtenida");
+
+        }
+
+    }
+
+
+
+
+
+
 
 
 

@@ -2,8 +2,8 @@ package org.barcoUade;
 
 public class Submarino {
 
-    private Double posicionX;
-    private Double profundidad;
+    private double posicionX;
+    private double profundidad;
     private int vidas;
     private double vida;
     private  String direccion;
@@ -69,12 +69,12 @@ public class Submarino {
         vida -= porcentajedanio;
 
         if(vida <= 0){
-            vida --;
+            vidas --;
             vida = 100;
 
         }
 
-        if(vida < 0){
+        if(vidas < 0){
             vidas = 0;
 
         }
