@@ -12,8 +12,8 @@ public class Nivel {
     public Nivel() {
 
         this.numeroNivel = 1;
-        this.velocidadBarcos = 1.0;
-        this.velocidadCargas = 1.0;
+        this.velocidadBarcos *= 1.20;
+        this.velocidadCargas *= 1.20;
     }
 
 
