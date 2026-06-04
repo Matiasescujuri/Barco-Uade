@@ -1,4 +1,5 @@
 package org.barcoUade;
+
 import java.util.Random;
 
 public class CargaProfundidad {
@@ -6,9 +7,7 @@ public class CargaProfundidad {
     private double posicionX;
     private double profundidadActual;
     private double profundidadExplosion;
-
     private double velocidadCaida;
-
     private boolean exploto;
 
     public CargaProfundidad(double posicionX, double velocidadCaida) {
@@ -17,26 +16,20 @@ public class CargaProfundidad {
         this.velocidadCaida = velocidadCaida;
         this.exploto = false;
 
-
         generarProfundidadExplosion();
 
-        System.out.println("Carga creadaaa");
-
-
+        System.out.println("Carga creada");
     }
 
     public void caer() {
-
         profundidadActual += velocidadCaida;
-        System.out.println("Carga en caida. profundida actual :" + profundidadActual);
-
+        System.out.println("Carga en caida. profundidad actual: " + profundidadActual);
     }
 
     public void explotar() {
         if (profundidadActual >= profundidadExplosion) {
             exploto = true;
             System.out.println("Carga explota en profundidad " + profundidadExplosion);
-
         }
     }
 
@@ -44,25 +37,32 @@ public class CargaProfundidad {
         return exploto;
     }
 
-
     public void generarProfundidadExplosion() {
         Random random = new Random();
-
         profundidadExplosion = random.nextInt(401) + 300;
     }
 
     public double calcularDistancia(Submarino submarino) {
-        double distancia =
-                Math.abs(
-                        profundidadExplosion
-                                - submarino.getProfundidad()
-                );
-        return distancia;
+        double diferenciaX = posicionX - submarino.getPosicionX();
+        double diferenciaProfundidad = profundidadExplosion - submarino.getProfundidad();
 
+        double distancia = Math.sqrt(
+                diferenciaX * diferenciaX +
+                        diferenciaProfundidad * diferenciaProfundidad
+        );
+
+        return distancia;
     }
 
+    public double getPosicionX() {
+        return posicionX;
+    }
 
+    public double getProfundidadExplosion() {
+        return profundidadExplosion;
+    }
+
+    public double getProfundidadActual() {
+        return profundidadActual;
+    }
 }
-
-
-
