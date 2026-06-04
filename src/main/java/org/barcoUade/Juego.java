@@ -13,7 +13,7 @@ public class Juego {
 
     private Nivel nivel;
     private BarcoEnemigo[] barcos;
-    private CargaProfundidad carga;
+    private CargaProfundidad[] cargas;
 
     private int proximaVidaExtra;
     private boolean juegoFinalizado;
@@ -28,7 +28,9 @@ public class Juego {
 
         submarino = new Submarino();
         nivel = new Nivel();
+
         barcos = new BarcoEnemigo[3];
+        cargas = new CargaProfundidad[3];
 
         proximaVidaExtra = 500;
         juegoFinalizado = false;
@@ -52,35 +54,24 @@ public class Juego {
             if (barcos[i] != null) {
                 barcos[i].mover();
 
-                if (carga == null) {
-                    carga = barcos[i].lanzarCarga(velocidadCargas);
+                if (cargas[i] == null) {
+                    cargas[i] = barcos[i].lanzarCarga(velocidadCargas);
+                }
+
+                cargas[i].caer();
+                cargas[i].explotar();
+
+                if (cargas[i].isExploto()) {
+                    procesarExplosion(cargas[i]);
+                    cargas[i] = null;
+                    barcos[i] = null;
+                    barcosActivos--;
                 }
             }
         }
 
-        if (carga != null) {
-            carga.caer();
-            carga.explotar();
-        }
-
-        if (carga != null && carga.isExploto()) {
-            procesarExplosion(carga);
-            carga = null;
-            eliminarUnBarcoActivo();
-        }
-
         verificarPasoNivel();
         finalizarJuego();
-    }
-
-    public void eliminarUnBarcoActivo() {
-        for (int i = 0; i < barcos.length; i++) {
-            if (barcos[i] != null) {
-                barcos[i] = null;
-                barcosActivos--;
-                break;
-            }
-        }
     }
 
     public void verificarPasoNivel() {
@@ -91,10 +82,10 @@ public class Juego {
 
     public void generarBarco() {
         if (barcosActivos < 3 && barcosPendiente > 0) {
-
             for (int i = 0; i < barcos.length; i++) {
                 if (barcos[i] == null) {
                     barcos[i] = new BarcoEnemigo(velocidadBarcos);
+                    cargas[i] = null;
 
                     barcosActivos++;
                     barcosPendiente--;
@@ -106,7 +97,6 @@ public class Juego {
                     break;
                 }
             }
-
         } else {
             System.out.println("no se puede generar mas barcos");
         }
@@ -155,8 +145,9 @@ public class Juego {
     public void iniciarNivel() {
         barcosPendiente = 12;
         barcosActivos = 0;
-        carga = null;
+
         barcos = new BarcoEnemigo[3];
+        cargas = new CargaProfundidad[3];
 
         System.out.println("Nivel iniciado");
         nivel.mostrarNivel();
