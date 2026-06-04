@@ -35,10 +35,6 @@ public class TestControladorJuego {
         mostrarEstado(controlador);
 
 
-
-        System.out.println("=== DESPUES DE ACTUALIZAR JUEGO ===");
-        mostrarEstado(controlador);
-
         if (controlador.isJuegoFinalizado()) {
             System.out.println("GAME OVER");
             System.out.println("1 - Reiniciar");

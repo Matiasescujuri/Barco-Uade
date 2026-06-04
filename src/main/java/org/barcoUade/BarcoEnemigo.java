@@ -29,9 +29,9 @@ public class BarcoEnemigo {
         }
         System.out.println(
                 "barco moviendose hacia   "
-                +direccion
-                +"posicion"
-                +posicionX
+                        + direccion
+                        + "posicion"
+                        + posicionX
         );
     }
 
