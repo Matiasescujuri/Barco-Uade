@@ -5,15 +5,19 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class VentanaJuego extends JFrame {
-    private ControladorJuego controlador;
+
     private ControladorJuego controlador;
 
     public VentanaJuego() {
         controlador = new ControladorJuego();
 
-        // ventana...
+        setTitle("Barco UADE");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
 
         JLabel titulo = new JLabel("Barco UADE");
         JButton botonIniciar = new JButton("Iniciar juego");
@@ -23,34 +27,11 @@ public class VentanaJuego extends JFrame {
             titulo.setText("Juego iniciado - Nivel: " + controlador.getNivelActual());
         });
 
-
         panel.add(titulo);
         panel.add(botonIniciar);
+
+        add(panel);
+
+        setVisible(true);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
