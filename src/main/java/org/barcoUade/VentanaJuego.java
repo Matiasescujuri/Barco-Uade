@@ -34,8 +34,21 @@ public class VentanaJuego extends JFrame {
         JButton btnBajar = new JButton("↓");
         JButton botonIniciar = new JButton("START GAME");
 
+
+
+        JButton btnIzquierda = new JButton("←");
+        JButton btnDerecha = new JButton("→");
+        JButton btnSubir = new JButton("↑");
+        JButton btnBajar = new JButton("↓");
+
+
+
+
+
         botonIniciar.addActionListener(e -> {
             controlador.iniciarJuego();
+
+
             titulo.setText("Juego iniciado");
 
             lblNivel.setText("Nivel: " + controlador.getNivelActual());
@@ -43,6 +56,22 @@ public class VentanaJuego extends JFrame {
             lblVidas.setText("Vidas: " + controlador.getVidasSubmarino());
 
         });
+        btnIzquierda.addActionListener(e -> {
+            controlador.moverSubmarinoIzquierda();
+        });
+
+        btnDerecha.addActionListener(e -> {
+            controlador.moverSubmarinoDerecha();
+        });
+
+        btnSubir.addActionListener(e -> {
+            controlador.subirSubmarino();
+        });
+
+        btnBajar.addActionListener(e -> {
+            controlador.bajarSubmarino();
+        });
+
 
         panel.add(titulo);
         panel.add(botonIniciar);
@@ -51,6 +80,10 @@ public class VentanaJuego extends JFrame {
         panel.add(lblPuntaje);
         panel.add(lblVidas);
         panel.add(botonIniciar);
+        panel.add(btnIzquierda);
+        panel.add(btnDerecha);
+        panel.add(btnSubir);
+        panel.add(btnBajar);
 
         add(panel);
 
