@@ -3,7 +3,7 @@
 
 Proyecto desarrollado en Java aplicando conceptos de Programación Orientada a Objetos (POO).
 
-## 📋 Descripción
+##  Descripción
 
 El jugador controla un submarino que debe sobrevivir a los ataques de barcos enemigos.
 
@@ -148,35 +148,6 @@ Interfaz gráfica desarrollada con Java Swing.
 
 Permite probar el funcionamiento del sistema sin interfaz gráfica.
 
----
-
-## 🛠️ Tecnologías Utilizadas
-
-- Java
-- Maven
-- Java Swing
-- IntelliJ IDEA
-
----
-
-## ▶️ Ejecución
-
-### Desde IntelliJ IDEA
-
-Ejecutar:
-
-```java
-Main.java
-```
-
-### Desde Maven
-
-```bash
-mvn clean compile
-mvn exec:java
-```
-
----
 
 ## 👨‍💻 Autor
 
