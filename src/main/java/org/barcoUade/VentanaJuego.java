@@ -28,6 +28,10 @@ public class VentanaJuego extends JFrame {
         lblNivel = new JLabel("Nivel: 0");
         lblPuntaje = new JLabel("Puntaje: 0");
         lblVidas = new JLabel("Vidas: 0");
+        JButton btnIzquierda = new JButton("←");
+        JButton btnDerecha = new JButton("→");
+        JButton btnSubir = new JButton("↑");
+        JButton btnBajar = new JButton("↓");
         JButton botonIniciar = new JButton("START GAME");
 
         botonIniciar.addActionListener(e -> {
@@ -37,6 +41,7 @@ public class VentanaJuego extends JFrame {
             lblNivel.setText("Nivel: " + controlador.getNivelActual());
             lblPuntaje.setText("Puntaje: " + controlador.getPuntaje());
             lblVidas.setText("Vidas: " + controlador.getVidasSubmarino());
+
         });
 
         panel.add(titulo);
