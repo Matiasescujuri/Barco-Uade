@@ -144,6 +144,7 @@ public class Juego {
         iniciarNivel();
 
 
+
     }
     public int getPuntaje() {
         return puntaje;

@@ -20,13 +20,22 @@ public class TestControladorJuego {
         mostrarEstado(controlador);
 
         controlador.mover();
+
         for (int i = 0; i < 25; i++) {
             controlador.bajarSubmarino();
         }
 
-        for (int i = 0; i < 80; i++) {
+        for (int i = 0; i < 2000; i++) {
             controlador.mover();
         }
+
+        System.out.println("Nivel actual: " + controlador.getNivelActual());
+
+        System.out.println("=== DESPUES DE ACTUALIZAR JUEGO ===");
+        mostrarEstado(controlador);
+
+
+
         System.out.println("=== DESPUES DE ACTUALIZAR JUEGO ===");
         mostrarEstado(controlador);
 
