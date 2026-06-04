@@ -11,6 +11,7 @@ public class Juego {
     private BarcoEnemigo barco;
     private CargaProfundidad carga;
     private int proximaVidaExtra;
+    private boolean juegoFinalizado;
 
     public Juego() {
         puntaje = 0;
@@ -20,6 +21,7 @@ public class Juego {
         submarino = new Submarino();
         nivel = new Nivel();
         proximaVidaExtra = 500;
+        juegoFinalizado = false;
     }
 
     public void iniciarJuego() {
@@ -29,7 +31,11 @@ public class Juego {
     }
 
     public void actualizarJuego() {
+        if (juegoFinalizado) {
+            return;
+        }
         System.out.println("juego actualizando");
+        generarBarco();
 
         if (barco != null) {
             barco.mover();
@@ -49,6 +55,7 @@ public class Juego {
             carga = null;
             barcosActivos--;
         }
+
 
         verificarPasoNivel();
         finalizarJuego();
@@ -78,6 +85,7 @@ public class Juego {
         System.out.println("procesando explosion");
 
         double distancia = carga.calcularDistancia(submarino);
+        System.out.println("Distancia calculada: " + distancia);
 
         if (distancia > 100) {
             puntaje += 30;
@@ -100,6 +108,7 @@ public class Juego {
 
     public void verificarVidaExtra() {
         if (puntaje >= proximaVidaExtra) {
+            submarino.ganarVida();
             System.out.println("Vida extra obtenida");
             proximaVidaExtra += 500;
         }
@@ -107,6 +116,7 @@ public class Juego {
 
     public void finalizarJuego() {
         if (submarino.getVidas() <= 0) {
+            juegoFinalizado = true;
             System.out.println("Juego finalizado");
         }
     }
@@ -124,6 +134,7 @@ public class Juego {
     public void pasarDeNivel(){
 
         puntaje += 200;
+        verificarVidaExtra();
 
         nivel.subirNivel();
 
@@ -131,6 +142,8 @@ public class Juego {
         System.out.println("Puntaje actual: " + puntaje);
 
         iniciarNivel();
+
+
     }
     public int getPuntaje() {
         return puntaje;
@@ -147,4 +160,30 @@ public class Juego {
     public int getNivelActual() {
         return nivel.getNumeroNivel();
     }
+    public void moverSubmarinoIzquierda() {
+        submarino.moverIzquierda();
+    }
+
+    public void moverSubmarinoDerecha() {
+        submarino.moverDerecha();
+    }
+
+    public void subirSubmarino() {
+        submarino.subir();
+    }
+
+    public void bajarSubmarino() {
+        submarino.bajar();
+    }
+    public double getPosicionSubmarinoX() {
+        return submarino.getPosicionX();
+    }
+
+    public double getProfundidadSubmarino() {
+        return submarino.getProfundidad();
+    }
+    public boolean isJuegoFinalizado() {
+        return juegoFinalizado;
+    }
+
 }

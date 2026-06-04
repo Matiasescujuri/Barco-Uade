@@ -79,4 +79,7 @@ public class Submarino {
 
         }
     }
+    public void ganarVida() {
+        vidas++;
+    }
 }
