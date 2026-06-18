@@ -10,8 +10,10 @@ import java.util.List;
 public class Juego {
 
     private Submarino submarino;
+    private int nivel;
 
     private int puntaje;
+    private ReproductorMusica musica;
     private int barcosPendiente;
     private int barcosActivos;
     private boolean victoria;
@@ -19,7 +21,6 @@ public class Juego {
     private double velocidadBarcos;
     private double velocidadCargas;
 
-    private Nivel nivel;
     private BarcoEnemigo[] barcos;
     private CargaProfundidad[] cargas;
 
@@ -30,15 +31,19 @@ public class Juego {
         puntaje = 0;
         barcosPendiente = 12;
         barcosActivos = 0;
+        victoria = false;
 
         velocidadBarcos = 2;
         velocidadCargas = 3;
 
         submarino = new Submarino();
-        nivel = new Nivel();
+        nivel = 1;
 
         barcos = new BarcoEnemigo[3];
         cargas = new CargaProfundidad[30];
+
+        musica = new ReproductorMusica();
+
 
         proximaVidaExtra = 500;
         juegoFinalizado = false;
@@ -46,6 +51,7 @@ public class Juego {
 
     public void iniciarJuego() {
         System.out.println("Juego iniciado");
+        musica.reproducir();  // SIN ESTO NO REPRODUCEEEEE FUNDAMENTAL!
         iniciarNivel();
     }
 
@@ -58,17 +64,11 @@ public class Juego {
 
         generarBarco();
 
-        // nueva lógica
-        // --- 1. LÓGICA DE LOS BARCOS ---
         for (int i = 0; i < barcos.length; i++) {
-
             if (barcos[i] != null) {
                 barcos[i].mover();
 
-                // ---> ¡ACÁ VA EL PASO 2! Agregamos "barcos[i].tieneMunicion() &&" <---
                 if (barcos[i].tieneMunicion() && Math.random() > 0.98) {
-
-                    // Buscamos un espacio vacío en el arreglo de bombas (j)
                     for (int j = 0; j < cargas.length; j++) {
                         if (cargas[j] == null) {
                             cargas[j] = barcos[i].lanzarCarga(velocidadCargas);
@@ -77,7 +77,6 @@ public class Juego {
                     }
                 }
 
-                // Borra al barco si salió del mapa
                 if (barcos[i].getPosicionX() > 850 || barcos[i].getPosicionX() < -50) {
                     barcos[i] = null;
                     barcosActivos--;
@@ -85,8 +84,6 @@ public class Juego {
             }
         }
 
-
-        //LÓGICA DE LAS BOMBAS ---
         for (int j = 0; j < cargas.length; j++) {
             if (cargas[j] != null) {
                 if (!cargas[j].isExploto()) {
@@ -98,6 +95,7 @@ public class Juego {
                     }
                 } else {
                     cargas[j].reducirTiempoVisual();
+
                     if (cargas[j].getTiempoVisualExplosion() <= 0) {
                         cargas[j] = null;
                     }
@@ -118,16 +116,10 @@ public class Juego {
     public void generarBarco() {
         if (barcosActivos < 3 && barcosPendiente > 0) {
             for (int i = 0; i < barcos.length; i++) {
-
-                if (barcos[i] == null && cargas[i] == null) {
+                if (barcos[i] == null) {
                     barcos[i] = new BarcoEnemigo(velocidadBarcos);
                     barcosActivos++;
                     barcosPendiente--;
-
-                    //System.out.println("barco generado");
-                    //System.out.println("barcos activos: " + barcosActivos);
-                    //System.out.println("barcos pendiente: " + barcosPendiente);
-
                     break;
                 }
             }
@@ -159,7 +151,7 @@ public class Juego {
         verificarVidaExtra();
 
         if (submarino.getVidas() <= 0) {
-            this.juegoFinalizado = true;
+            juegoFinalizado = true;
         }
     }
 
@@ -183,16 +175,16 @@ public class Juego {
         barcosActivos = 0;
 
         barcos = new BarcoEnemigo[3];
-        cargas = new CargaProfundidad[3];
+        cargas = new CargaProfundidad[30];
 
         System.out.println("Nivel iniciado");
-        nivel.mostrarNivel();
+        System.out.println("Su nivel actual es " + nivel);
 
         generarBarco();
     }
 
     public void pasarDeNivel() {
-        if (nivel.getNumeroNivel() == 12) {
+        if (nivel == 12) {
             juegoFinalizado = true;
             victoria = true;
             return;
@@ -204,7 +196,7 @@ public class Juego {
         velocidadBarcos *= 1.20;
         velocidadCargas *= 1.20;
 
-        nivel.subirNivel();
+        subirNivel();
 
         System.out.println("Pasaste de nivel");
         System.out.println("Puntaje actual: " + puntaje);
@@ -218,30 +210,32 @@ public class Juego {
 
     public List<BarcoEnemigoDTO> getEstadoBarcos() {
         List<BarcoEnemigoDTO> barcosDTO = new ArrayList<>();
-        // Recorremos el arreglo fijo de tu compañero
+
         for (int i = 0; i < barcos.length; i++) {
             if (barcos[i] != null) {
                 barcosDTO.add(new BarcoEnemigoDTO(i, barcos[i].getPosicionX(), barcos[i].getDireccion()));
             }
         }
+
         return barcosDTO;
     }
 
     public List<CargaProfundidadDTO> getEstadoCargas() {
         List<CargaProfundidadDTO> cargasDTO = new ArrayList<>();
+
         for (int i = 0; i < cargas.length; i++) {
             if (cargas[i] != null) {
                 cargasDTO.add(new CargaProfundidadDTO(cargas[i].getPosicionX(), cargas[i].getProfundidadActual(), cargas[i].isExploto()));
             }
         }
+
         return cargasDTO;
     }
 
     public int getBarcosGenerados() {
-        return 12 - this.barcosPendiente;
+        return 12 - barcosPendiente;
     }
 
-    //
     public boolean isVictoria() {
         return victoria;
     }
@@ -258,8 +252,17 @@ public class Juego {
         return submarino.getHp();
     }
 
+    public int getNivel() {
+        return nivel;
+    }
+
     public int getNivelActual() {
-        return nivel.getNumeroNivel();
+        return nivel;
+    }
+
+    public void subirNivel() {
+        nivel++;
+        System.out.println("SUBISTE al nivel " + nivel);
     }
 
     public void moverSubmarinoIzquierda() {

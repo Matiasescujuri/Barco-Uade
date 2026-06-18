@@ -16,7 +16,6 @@ public class VentanaJuego extends JFrame {
     private ControladorJuego controlador;
     private TableroJuego tablero; // Traemos el lienzo que dibujará los DTOs
 
-    // El HUD (Head-Up Display) con la info del jugador
     private JLabel lblNivel;
     private JLabel lblPuntaje;
     private JLabel lblVidas;

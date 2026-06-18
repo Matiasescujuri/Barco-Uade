@@ -27,15 +27,14 @@ public class TableroJuego extends JPanel {
     private Image imgExplosion;
 
     public TableroJuego() {
-        // Le damos un color de fondo azul marino al panel
         setBackground(new Color(30, 144, 255));
         setPreferredSize(new Dimension(800, 850));
 
-        imgSubmarino = new ImageIcon("C:\\Users\\Nacho\\Desktop\\untitled\\Barco-Uade\\src\\images\\imgSubmarino.png").getImage();
-        imgBarco = new ImageIcon("C:\\Users\\Nacho\\Desktop\\untitled\\Barco-Uade\\src\\images\\barco.png").getImage();
-        imgBomba = new ImageIcon("C:\\Users\\Nacho\\Desktop\\untitled\\Barco-Uade\\src\\images\\bomba.png").getImage();
-        imgFondo = new ImageIcon("C:\\Users\\Nacho\\Desktop\\untitled\\Barco-Uade\\src\\images\\fondo.jpg").getImage();
-        imgExplosion = new ImageIcon("C:\\Users\\Nacho\\Desktop\\untitled\\Barco-Uade\\src\\images\\explosion.png").getImage();
+        imgSubmarino = new ImageIcon("Barco-Uade/src/images/imgSubmarino.png").getImage();
+        imgBarco = new ImageIcon("Barco-Uade/src/images/barco.png").getImage();
+        imgBomba = new ImageIcon("Barco-Uade/src/images/bomba.png").getImage();
+        imgFondo = new ImageIcon("Barco-Uade/src/images/fondo.jpg").getImage();
+        imgExplosion = new ImageIcon("Barco-Uade/src/images/explosion.png").getImage();
     }
 
     // Este es el metodo por el que la Vista recibe los datos nuevos del Controlador
@@ -44,7 +43,7 @@ public class TableroJuego extends JPanel {
         this.barcos = barcos;
         this.bombas = bombas;
 
-        // ¡Magia de Swing! Le avisa a Java que tiene que volver a dibujar todo
+
         repaint();
     }
 
